@@ -1,3 +1,69 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.start-scene {
+    background-color: #f4f3f4;
+    border-radius: 8px;
+    width: 800px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 canvas {
     background-color: #f4f3f4;
+    border-radius: 8px;
+    display:none;
+}
+
+.game-info {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.general {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f3f4;
+    padding: 5%;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-style: bold;
+}
+
+.instructions, .result {
+    height: 20%;
+}
+
+.brain-status {
+    flex-direction: column;
+    height:39%;
+
+}
+
+.brain-status > h2 {
+    font-size:24px;
+    margin-top:0;
+    font-weight: normal;
+}
+
+.brain-img {
+    width: 200px;
 }

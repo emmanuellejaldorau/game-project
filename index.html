@@ -7,10 +7,22 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <canvas class="game-canvas" width="800" height="500"></canvas>
-    <div>
-        <p class =".total-score"></p>
+<header>
+    <h1>Bootcamp Game</h1>
+</header>
+<div class="container">
+    <div class = "start-scene">
+        <button class="start">Start the game</button>
     </div>
+    <canvas class="game-canvas" width="800" height="500"></canvas>
+    <div class="game-info" >
+        <div class="general instructions">Catch the books to get more skilled! Avoid the beers, you'll party later!</div>
+        <div class="general brain-status">
+            <h2>Brain status</h2>
+            <img class="brain-img" src="./images/happy-brain.gif" alt="brain-status">
+        </div>
+    </div>
+</div>
 
     <script src="./js/script.js"></script>
 </body>

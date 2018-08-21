@@ -2,16 +2,15 @@ var myCanvas = document.querySelector(".game-canvas");
 var ctx = myCanvas.getContext("2d");
 
 
-var totalScore = 0;
-
 //Avatar object and its image
 var avatarImg = new Image();
-avatarImg.src = "./images/avatar.jpeg"
+avatarImg.src = "./images/avatar.png"
 var avatar = {
     x: 375,
-    y: 450,
-    width: 50,
-    height: 50,
+    y: 440,
+    width: 60,
+    height: 60,
+    isActive: true,
     drawMe: function () {
         ctx.drawImage(avatarImg, this.x, this.y, this.width, this.height);
     },
@@ -37,126 +36,125 @@ var avatar = {
 
 //Books object
 var bookImg = new Image();
-bookImg.src = "./images/books.jpg"
+bookImg.src = "./images/books.png"
 
 function Book (myX, myY) {
-    this.x = Math.floor(Math.random() * 800);
-    this.y = Math.floor(Math.random() * 500);
+    this.x = Math.floor(Math.random() * 700);
+    this.y = -50;
     this.width = 50;
     this.height = 50;
 }
 
 Book.prototype.drawMe = function () {
-        this.y += 1;
-        
-        if (this.y < -this.height) {
-            this.x = 1000;
+        if (avatar.isActive) {
+            this.y += 1;
         }
-
-        if (this.y > 500 + this.height) {
-            this.y = - this.height;
-        }
-
+                
         ctx.drawImage(bookImg, this.x, this.y, this.width, this.height);  
 };
 
-var book1 = new Book;
-var book2 = new Book;
-var book3 = new Book;
-var book4 = new Book;
-var book5 = new Book;
-var book6 = new Book;
+var allBooks = [ ];
 
-var allBooks = [ book1, book2, book3, book4, book5, book6 ];
+function createBookArray() {
+    setInterval(function(){ 
+        var book = new Book; 
+        allBooks.push(book);
+    }, 3000);
+}
+
+
 
 
 //Beers object
 var beerImg = new Image();
-beerImg.src = "./images/biere.jpg"
+beerImg.src = "./images/beers.png"
 
 function Beer (myX, myY) {
-    this.x = Math.floor(Math.random() * 800);
-    this.y = Math.floor(Math.random() * 500);
+    this.x = Math.floor(Math.random() * 700);
+    this.y = -75;
     this.width = 100;
-    this.height = 75;
+    this.height = 100;
 }
 
 Beer.prototype.drawMe = function () {
-        this.y += 1;
-        
-        if (this.y < -this.height) {
-            this.x = 1000;
+        if (avatar.isActive) {
+            this.y += 1;
         }
-
-        if (this.y > 500 + this.height) {
-            this.y = - this.height;
-        }
-
+    
         ctx.drawImage(beerImg, this.x, this.y, this.width, this.height);  
 };
 
-var beer1 = new Beer;
-var beer2 = new Beer;
+var allBeers = [];
 
-
-var allBeers = [ beer1, beer2 ];
-
-//-----------------------------------------------------------
-
-function drawScene () {
-    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-
-    avatar.drawMe();
-
-    allBooks.forEach(function(oneBook) {
-        oneBook.drawMe();
-
-        if (collision(avatar, oneBook)) {
-            totalScore += 1;
-        }
-    
-    });
-    
-    allBeers.forEach(function(oneBeer) {
-        oneBeer.drawMe();
-
-        if (collision(avatar, oneBeer)) {
-            totalScore -= 50;
-        }
-
-    });
-
-    
-    requestAnimationFrame (function () {
-    drawScene();
-    });
+function createBeerArray() {
+    setInterval(function(){ 
+        var beer = new Beer; 
+        allBeers.push(beer);
+    }, 4000);
 }
 
-drawScene();
 
-document.onkeydown = function (event) {
-    switch (event.keyCode) {
-        case 37: //left arrow
-            avatar.x -=10;
-            break;
-        
-        case 32: //space bar
-        case 38: //up arrow
-            avatar.y -=10;
-            break;
-            
-        case 39://right arrow
-            avatar.x += 10;
-            break;
 
-        case 40://down arrow
-            avatar.y +=10;
-            break;
+
+
+//Variable definition
+var totalScore = 0;
+var gameInfo= document.querySelector(".game-info");
+var result = document.querySelector(".result");
+var instructions = document.querySelector(".instructions");
+var brainStatusImage = document.querySelector(".brain-img");
+var currentImage = "happy";
+var currentLevel = "none";
+var startGame = document.querySelector(".start");
+var startScene = document.querySelector(".start-scene");
+
+
+//Game over
+var gameOver = {
+    x:200,
+    y:200,
+    opacity:0,
+    drawMe: function () {
+        if(this.opacity<1) {
+            this.opacity += 0.05;
+        }
+        //fade in the text with globalAlpha
+        ctx.globalAlpha = this.opacity;
+        ctx.font = "70px arial";
+        ctx.fillStyle ="rebeccapurple";
+        ctx.fillText("Game Over", this.x, this.y);
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+        ctx.strokeText("Game Over", this.x, this.y);
+        ctx.globalAlpha = 1;
+
     }
-
-    avatar.controlBoundaries();
 };
 
+
+//Congrats
+
+var congrats = {
+    x: 200,
+    y: 200,
+    opacity:0,
+    drawMe: function () {
+        if(this.opacity<1) {
+            this.opacity += 0.05;
+        }
+        ctx.globalAlpha = this.opacity;
+        ctx.font = "70px arial";
+        ctx.fillStyle ="red";
+        ctx.fillText("Congrats!!", this.x, this.y);
+
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 1;
+    }
+}
+
+
+//-----------------------------------------------------------
 
 
 function collision (rectA, rectB) {
@@ -165,3 +163,150 @@ function collision (rectA, rectB) {
         && rectA.x + rectA.width >= rectB.x
         && rectA.x <= rectB.x + rectB.width;
 };
+
+
+function drawScene () {
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+    avatar.drawMe();
+    
+
+    if ((totalScore % 8 !== 0 && totalScore > 0) || totalScore === 0) {
+
+        instructions.innerHTML = "Catch the books to get more skilled! Avoid the beers, you'll party later!"
+        
+        allBooks.forEach(function(oneBook) {
+            oneBook.drawMe();
+
+            if (collision(avatar, oneBook)) {
+                totalScore += 1;
+                oneBook.y = - oneBook.height;
+            }
+        
+        });
+    
+        allBeers.forEach(function(oneBeer) {
+            oneBeer.drawMe();
+            if (collision(avatar, oneBeer)) {
+                totalScore -= 25;
+                oneBeer.y = - oneBeer.height;
+                if (currentImage !== "beer"){
+                    brainStatusImage.src="./images/beer-brain.gif";
+                    currentImage = "beer";
+                }        
+            }     
+        });
+    }
+
+    if (totalScore % 8 === 0 && totalScore > 0) {
+
+        instructions.innerHTML = "Your brain is full! Avoid books or your brain will explode and grab a beer to unlock your brain! "
+
+        if (currentImage !=="full" ) {
+            brainStatusImage.src="./images/full-brain.gif";
+            currentImage = "full";
+        }
+
+        allBooks.forEach(function(oneBook) {
+            oneBook.drawMe();
+
+            if (collision(avatar, oneBook)) {
+                totalScore -= 25;
+                oneBook.y = - oneBook.height;
+                if (currentImage !== "explosion"){
+                    brainStatusImage.src="./images/brain-explosion.gif";
+                    currentImage = "explosion";
+                }
+            }            
+        });
+    
+        allBeers.forEach(function(oneBeer) {
+            oneBeer.drawMe();
+            if (collision(avatar, oneBeer)) {
+                totalScore += 1;
+                oneBeer.y = - oneBeer.height;        
+            }     
+        });
+    }
+
+    
+
+    if (totalScore % 9 === 0 && totalScore > 0 && currentImage !=="happy" ) {
+        brainStatusImage.src="./images/happy-brain.gif";
+        currentImage = "happy";
+    }
+
+    if (totalScore < 0 ){
+        avatar.isActive = false;
+        gameOver.drawMe();
+        instructions.innerHTML = "Sorry, you lost!" 
+    }
+
+    
+    if (totalScore >= 5 && totalScore < 10 && currentLevel !== "first") { 
+        var newDiv = document.createElement("div");
+        newDiv.classList.add("general");
+        newDiv.classList.add("result");
+        gameInfo.appendChild(newDiv);       
+        newDiv.innerHTML= "You've completed the first week! Keep up the good work!";
+        currentLevel = "first";   
+    }
+
+    if (totalScore >= 10 && totalScore < 15) {
+        var result = document.querySelector(".result");
+        result.innerHTML= "You've completed the second week! Keep up the good work!";
+    }
+
+    if (totalScore >= 15 && totalScore < 20 ) {
+        var result = document.querySelector(".result");
+        result.innerHTML= "You've completed the third week! Keep up the good work!";
+    }
+
+    if (totalScore >= 20 && totalScore < 25 ) {
+        var result = document.querySelector(".result");
+        result.innerHTML= "You've completed the fourth week! Almost there!";
+    }
+
+    if (totalScore > 25 ) {
+        var result = document.querySelector(".result");
+        result.innerHTML= "Congrats! You are now a junior web developer!";
+        congrats.drawMe();
+        avatar.isActive= false;
+        instructions.innerHTML = "You've won!"
+        if (currentImage !== "winner"){
+            brainStatusImage.src="./images/winner.gif";
+            brainStatusImage.style.width = "150px";
+            currentImage = "winner";
+        }
+    }
+    
+    requestAnimationFrame (function () {
+    drawScene();
+    });
+}
+
+
+startGame.onclick =function () {
+    createBookArray();
+    createBeerArray();
+    drawScene();
+    startScene.style.display = "none";
+    myCanvas.style.display = "block";
+
+}
+
+document.onkeydown = function (event) {
+    switch (event.keyCode) {
+        case 37: //left arrow
+            avatar.x -=10;
+            break;
+                        
+        case 39://right arrow
+            avatar.x += 10;
+            break;
+   
+    }
+
+    avatar.controlBoundaries();
+};
+
