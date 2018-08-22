@@ -1,6 +1,20 @@
 var myCanvas = document.querySelector(".game-canvas");
 var ctx = myCanvas.getContext("2d");
 
+//Variable definition
+var totalScore = 0;
+var gameInfo= document.querySelector(".game-info");
+var result = document.querySelector(".result");
+var instructions = document.querySelector(".instructions");
+var brainStatusImage = document.querySelector(".brain-img");
+var currentImage = "happy";
+var currentLevel = "none";
+var startGame = document.querySelector(".start");
+var startScene = document.querySelector(".start-scene");
+var endScene = document.querySelector(".end-scene");
+var playAgainStatus = "not displayed";
+var playAgainButton = document.querySelector(".play-again");
+
 
 //Avatar object and its image
 var avatarImg = new Image();
@@ -48,19 +62,20 @@ function Book (myX, myY) {
 Book.prototype.drawMe = function () {
         if (avatar.isActive) {
             this.y += 1;
-        }
-                
-        ctx.drawImage(bookImg, this.x, this.y, this.width, this.height);  
+                        
+        ctx.drawImage(bookImg, this.x, this.y, this.width, this.height); 
+        } 
 };
 
 var allBooks = [ ];
 
-function createBookArray() {
+var createBookArray = function() {
     setInterval(function(){ 
         var book = new Book; 
         allBooks.push(book);
     }, 3000);
-}
+};
+
 
 
 
@@ -79,54 +94,37 @@ function Beer (myX, myY) {
 Beer.prototype.drawMe = function () {
         if (avatar.isActive) {
             this.y += 1;
-        }
-    
-        ctx.drawImage(beerImg, this.x, this.y, this.width, this.height);  
+            
+        ctx.drawImage(beerImg, this.x, this.y, this.width, this.height); 
+        } 
 };
 
 var allBeers = [];
 
-function createBeerArray() {
+var createBeerArray = function(){
     setInterval(function(){ 
         var beer = new Beer; 
         allBeers.push(beer);
     }, 4000);
-}
+};
 
 
-
-
-
-//Variable definition
-var totalScore = 0;
-var gameInfo= document.querySelector(".game-info");
-var result = document.querySelector(".result");
-var instructions = document.querySelector(".instructions");
-var brainStatusImage = document.querySelector(".brain-img");
-var currentImage = "happy";
-var currentLevel = "none";
-var startGame = document.querySelector(".start");
-var startScene = document.querySelector(".start-scene");
 
 
 //Game over
 var gameOver = {
     x:200,
-    y:200,
+    y:220,
     opacity:0,
     drawMe: function () {
         if(this.opacity<1) {
             this.opacity += 0.05;
         }
-        //fade in the text with globalAlpha
         ctx.globalAlpha = this.opacity;
-        ctx.font = "70px arial";
-        ctx.fillStyle ="rebeccapurple";
+        ctx.font = "70px 'Permanent Marker'";
+        ctx.fillStyle ="#8A2BE2";
         ctx.fillText("Game Over", this.x, this.y);
-
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "black";
-        ctx.strokeText("Game Over", this.x, this.y);
         ctx.globalAlpha = 1;
 
     }
@@ -137,21 +135,22 @@ var gameOver = {
 
 var congrats = {
     x: 200,
-    y: 200,
+    y: 220,
     opacity:0,
     drawMe: function () {
         if(this.opacity<1) {
             this.opacity += 0.05;
         }
         ctx.globalAlpha = this.opacity;
-        ctx.font = "70px arial";
-        ctx.fillStyle ="red";
-        ctx.fillText("Congrats!!", this.x, this.y);
+        ctx.font = "70px 'Permanent Marker'";
+        ctx.fillStyle ="#3CB371";
+        ctx.fillText("CONGRATS!!", this.x, this.y);
 
         ctx.lineWidth = 3;
         ctx.globalAlpha = 1;
     }
 }
+
 
 
 //-----------------------------------------------------------
@@ -164,6 +163,14 @@ function collision (rectA, rectB) {
         && rectA.x <= rectB.x + rectB.width;
 };
 
+function changeGif(status, statusImg) {
+    if (currentImage !== status) {
+        brainStatusImage.src= statusImg;
+        currentImage = status;
+    }
+};
+
+
 
 function drawScene () {
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -171,10 +178,11 @@ function drawScene () {
     avatar.drawMe();
     
 
-    if ((totalScore % 8 !== 0 && totalScore > 0) || totalScore === 0) {
+    if ((totalScore % 8 !== 0 && totalScore > 0 && totalScore < 26) || totalScore === 0) {
 
-        instructions.innerHTML = "Catch the books to get more skilled! Avoid the beers, you'll party later!"
-        
+        instructions.innerHTML = "<p>Catch the books to get more skilled!</p> <p>Avoid the beers, you'll party later!</p>"
+        changeGif("happy","./images/happy-brain.gif");
+
         allBooks.forEach(function(oneBook) {
             oneBook.drawMe();
 
@@ -190,22 +198,16 @@ function drawScene () {
             if (collision(avatar, oneBeer)) {
                 totalScore -= 25;
                 oneBeer.y = - oneBeer.height;
-                if (currentImage !== "beer"){
-                    brainStatusImage.src="./images/beer-brain.gif";
-                    currentImage = "beer";
-                }        
+                changeGif("beer","./images/beer-brain.gif");    
             }     
         });
     }
 
     if (totalScore % 8 === 0 && totalScore > 0) {
 
-        instructions.innerHTML = "Your brain is full! Avoid books or your brain will explode and grab a beer to unlock your brain! "
-
-        if (currentImage !=="full" ) {
-            brainStatusImage.src="./images/full-brain.gif";
-            currentImage = "full";
-        }
+        instructions.innerHTML = "<p>Your brain is full!</p> <p>Avoid books or your brain will explode and grab a beer to unlock your brain!</p> "
+        
+        changeGif("full","./images/full-brain.gif");
 
         allBooks.forEach(function(oneBook) {
             oneBook.drawMe();
@@ -213,10 +215,7 @@ function drawScene () {
             if (collision(avatar, oneBook)) {
                 totalScore -= 25;
                 oneBook.y = - oneBook.height;
-                if (currentImage !== "explosion"){
-                    brainStatusImage.src="./images/brain-explosion.gif";
-                    currentImage = "explosion";
-                }
+                changeGif("explosion","./images/brain-explosion.gif");
             }            
         });
     
@@ -229,17 +228,13 @@ function drawScene () {
         });
     }
 
-    
-
-    if (totalScore % 9 === 0 && totalScore > 0 && currentImage !=="happy" ) {
-        brainStatusImage.src="./images/happy-brain.gif";
-        currentImage = "happy";
-    }
-
     if (totalScore < 0 ){
-        avatar.isActive = false;
         gameOver.drawMe();
-        instructions.innerHTML = "Sorry, you lost!" 
+        instructions.innerHTML = "Sorry, you lost!"; 
+        if (playAgainStatus !== "displayed") {
+            endScene.style.display = "block";
+            var playAgainStatus = "diplayed";
+        }
     }
 
     
@@ -248,37 +243,39 @@ function drawScene () {
         newDiv.classList.add("general");
         newDiv.classList.add("result");
         gameInfo.appendChild(newDiv);       
-        newDiv.innerHTML= "You've completed the first week! Keep up the good work!";
+        newDiv.innerHTML= "<p class ='trophy'>🏆</p><p>You've completed the first week! Keep up the good work!</p>";
         currentLevel = "first";   
     }
 
     if (totalScore >= 10 && totalScore < 15) {
         var result = document.querySelector(".result");
-        result.innerHTML= "You've completed the second week! Keep up the good work!";
+        result.innerHTML= "<p class ='trophy'>🏆🏆</p><p>You've completed the second week! Keep up the good work!</p>";
     }
 
     if (totalScore >= 15 && totalScore < 20 ) {
         var result = document.querySelector(".result");
-        result.innerHTML= "You've completed the third week! Keep up the good work!";
+        result.innerHTML= "<p class ='trophy'>🏆🏆🏆</p><p>You've completed the third week! Keep up the good work!</p>";
     }
 
     if (totalScore >= 20 && totalScore < 25 ) {
         var result = document.querySelector(".result");
-        result.innerHTML= "You've completed the fourth week! Almost there!";
+        result.innerHTML= "<p class ='trophy'>🏆🏆🏆🏆</p><p>You've completed the fourth week! Almost there!</p>";
     }
 
-    if (totalScore > 25 ) {
+    if (totalScore > 25) {
         var result = document.querySelector(".result");
-        result.innerHTML= "Congrats! You are now a junior web developer!";
+        result.innerHTML= "<p class ='trophy'>🏆🏆🏆🏆🏆</p><p>Congrats! You are now a junior web developer!</p>";
         congrats.drawMe();
-        avatar.isActive= false;
-        instructions.innerHTML = "You've won!"
-        if (currentImage !== "winner"){
-            brainStatusImage.src="./images/winner.gif";
-            brainStatusImage.style.width = "150px";
-            currentImage = "winner";
+        avatar.isActive = false;
+        instructions.innerHTML = "You've won!";
+        changeGif("winner","./images/winner.gif");
+        brainStatusImage.style.width = "150px";
+        if (playAgainStatus !== "displayed") {
+            endScene.style.display = "block";
+            var playAgainStatus = "diplayed";
         }
     }
+
     
     requestAnimationFrame (function () {
     drawScene();
@@ -294,6 +291,11 @@ startGame.onclick =function () {
     myCanvas.style.display = "block";
 
 }
+
+playAgainButton.onclick = function () {
+    window.location.href="index.html";
+}
+
 
 document.onkeydown = function (event) {
     switch (event.keyCode) {

@@ -3,22 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Bootcamp game</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 <header>
-    <h1>Bootcamp Game</h1>
+    <h1>Back to school Game</h1>
 </header>
 <div class="container">
-    <div class = "start-scene">
-        <button class="start">Start the game</button>
+    <div class="game-zone">
+        <div class = "start-scene">
+            <button class="start">Start game</button>
+        </div>
+        <div class = "end-scene">
+                <button class="play-again">Play again</button>
+        </div>
+        <canvas class="game-canvas" width="800" height="500"></canvas>
     </div>
-    <canvas class="game-canvas" width="800" height="500"></canvas>
     <div class="game-info" >
-        <div class="general instructions">Catch the books to get more skilled! Avoid the beers, you'll party later!</div>
+        <div class="general instructions">
+            <p>Catch the books to get more skilled!</p> 
+            <p>Avoid the beers, you'll party later!</p>
+        </div>
         <div class="general brain-status">
-            <h2>Brain status</h2>
+            <h2>Brain Status</h2>
             <img class="brain-img" src="./images/happy-brain.gif" alt="brain-status">
         </div>
     </div>

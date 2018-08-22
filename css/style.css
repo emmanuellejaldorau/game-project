@@ -1,10 +1,22 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    color: #303030;
 }
 
+header {
+    margin: 2% 0;
+}
 
 h1 {
+    font-family: "Permanent Marker";
     text-align: center;
+    color: #fff;
+    font-size: 50px;
+    text-shadow: 1px 1px black;
+    text-transform: uppercase;
+    margin:0;
 }
 
 .container {
@@ -22,6 +34,59 @@ h1 {
     align-items: center;
 }
 
+.start {
+    background-color: #EEB422;
+    border: none;
+    border-radius: 6px;
+    height : 50px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.start:hover {
+    background-color: #FF7F50;
+}
+
+.end-scene {
+    display: none;
+    position: absolute;
+    top: 380px;
+    left: 380px;
+}
+
+.play-again {
+    border: 3px solid #C71585;
+    color: #C71585;
+    background-color: #f4f3f4;
+    border-radius: 6px;
+    height : 50px;
+    font-size: 20px;
+    font-weight: bold;
+    animation: 3s crazycolor infinite alternate;
+}
+
+
+@keyframes crazycolor {
+    0% {
+        border-color: #C71585;
+        color: #C71585;
+    }
+    50% {
+        border-color: #C71585;
+        color: #C71585;
+    }
+    100% {
+        border-color: #8A2BE2;
+        color: #8A2BE2;
+    }
+
+}
+
+
+
 canvas {
     background-color: #f4f3f4;
     border-radius: 8px;
@@ -38,18 +103,27 @@ canvas {
 
 .general {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #f4f3f4;
-    padding: 5%;
+    padding: 4%;
     border-radius: 8px;
     text-align: center;
     font-size: 18px;
     font-style: bold;
 }
 
+.trophy {
+    margin-bottom: 0;
+}
+
 .instructions, .result {
     height: 20%;
+}
+
+.instructions > p  {
+    margin: 0;
 }
 
 .brain-status {
@@ -61,7 +135,7 @@ canvas {
 .brain-status > h2 {
     font-size:24px;
     margin-top:0;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .brain-img {
