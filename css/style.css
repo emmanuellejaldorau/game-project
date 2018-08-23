@@ -29,6 +29,7 @@ h1 {
     border-radius: 8px;
     width: 800px;
     height: 500px;
+    /* display:none; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,6 +51,46 @@ h1 {
     background-color: #FF7F50;
 }
 
+.avatar-scene {
+    display: none;
+    background-color: #f4f3f4;
+    border-radius: 8px;
+    width: 800px;
+    height: 500px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.avatar-scene > h2 {
+    padding-top:8%;
+    margin-bottom: 0;
+    color: #EEB422;
+    font-family: 'Permanent Marker';
+    font-size: 35px;
+}
+
+.avatars-choice {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+    padding-bottom: 16%;
+}
+
+.avatar-girl, .avatar-boy {
+    width: 100px;
+    padding:2%;
+} 
+
+.avatar-girl:hover, .avatar-boy:hover {
+    border: 2px solid #EEB422;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #EEB422;
+    width: 120px;
+
+}
+
 .end-scene {
     display: none;
     position: absolute;
@@ -65,7 +106,7 @@ h1 {
     height : 50px;
     font-size: 20px;
     font-weight: bold;
-    animation: 3s crazycolor infinite alternate;
+    animation: 0.8s crazycolor infinite alternate;
 }
 
 
@@ -135,7 +176,8 @@ canvas {
 .brain-status > h2 {
     font-size:24px;
     margin-top:0;
-    font-weight: bold;
+    font-family: 'Permanent Marker';
+    color: #EEB422;
 }
 
 .brain-img {

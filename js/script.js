@@ -1,3 +1,31 @@
+//Title animation
+var letters = document.querySelectorAll(".letters");
+
+function generateRandomColor() {
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+  }
+  
+  function changeColor() {
+    letters.forEach(function(oneLetter) {
+    oneLetter.style.color = generateRandomColor();
+    });
+  }
+
+function animation() {
+    var titleAnimation = setInterval(changeColor, 500);
+    setTimeout(function(){
+        clearInterval(titleAnimation);
+        letters.forEach(function(oneLetter){
+        oneLetter.style.color ="#fff";
+        });
+    }, 3000);
+};
+
+animation();
+
+
+
+//CANVAS
 var myCanvas = document.querySelector(".game-canvas");
 var ctx = myCanvas.getContext("2d");
 
@@ -11,22 +39,25 @@ var currentImage = "happy";
 var currentLevel = "none";
 var startGame = document.querySelector(".start");
 var startScene = document.querySelector(".start-scene");
+var avatarScene = document.querySelector(".avatar-scene")
+var avatarGirlButton = document.querySelector(".avatar-girl");
+var avatarBoyButton = document.querySelector(".avatar-boy");
 var endScene = document.querySelector(".end-scene");
 var playAgainStatus = "not displayed";
 var playAgainButton = document.querySelector(".play-again");
-
+var avatar;
 
 //Avatar object and its image
-var avatarImg = new Image();
-avatarImg.src = "./images/avatar.png"
-var avatar = {
+var avatarGirlImg = new Image();
+avatarGirlImg.src = "./images/avatar-girl.png"
+var avatarGirl = {
     x: 375,
     y: 440,
     width: 60,
     height: 60,
     isActive: true,
     drawMe: function () {
-        ctx.drawImage(avatarImg, this.x, this.y, this.width, this.height);
+        ctx.drawImage(avatarGirlImg, this.x, this.y, this.width, this.height);
     },
     controlBoundaries: function () {
         if (this.x < 0) {
@@ -47,6 +78,35 @@ var avatar = {
     }
 };
 
+var avatarBoyImg = new Image();
+avatarBoyImg.src = "./images/avatar-boy.png"
+var avatarBoy = {
+    x: 375,
+    y: 440,
+    width: 60,
+    height: 60,
+    isActive: true,
+    drawMe: function () {
+        ctx.drawImage(avatarBoyImg, this.x, this.y, this.width, this.height);
+    },
+    controlBoundaries: function () {
+        if (this.x < 0) {
+            this.x = 0;
+        }
+
+        if (this.y < 0) {
+            this.y = 0;
+        }
+
+        if (this.x > 800 - this.width) {
+            this.x = 800 - this.width;
+        }
+
+        if (this.y > 500 - this.height) {
+            this.y = 500 - this.height;
+        }
+    }
+};
 
 //Books object
 var bookImg = new Image();
@@ -59,7 +119,7 @@ function Book (myX, myY) {
     this.height = 50;
 }
 
-Book.prototype.drawMe = function () {
+Book.prototype.drawMe = function (avatar) {
         if (avatar.isActive) {
             this.y += 1;
                         
@@ -91,7 +151,7 @@ function Beer (myX, myY) {
     this.height = 100;
 }
 
-Beer.prototype.drawMe = function () {
+Beer.prototype.drawMe = function (avatar) {
         if (avatar.isActive) {
             this.y += 1;
             
@@ -172,11 +232,11 @@ function changeGif(status, statusImg) {
 
 
 
-function drawScene () {
+function drawScene (avatar) {
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
 
     avatar.drawMe();
-    
+        
 
     if ((totalScore % 8 !== 0 && totalScore > 0 && totalScore < 26) || totalScore === 0) {
 
@@ -184,7 +244,7 @@ function drawScene () {
         changeGif("happy","./images/happy-brain.gif");
 
         allBooks.forEach(function(oneBook) {
-            oneBook.drawMe();
+            oneBook.drawMe(avatar);
 
             if (collision(avatar, oneBook)) {
                 totalScore += 1;
@@ -194,7 +254,7 @@ function drawScene () {
         });
     
         allBeers.forEach(function(oneBeer) {
-            oneBeer.drawMe();
+            oneBeer.drawMe(avatar);
             if (collision(avatar, oneBeer)) {
                 totalScore -= 25;
                 oneBeer.y = - oneBeer.height;
@@ -210,7 +270,7 @@ function drawScene () {
         changeGif("full","./images/full-brain.gif");
 
         allBooks.forEach(function(oneBook) {
-            oneBook.drawMe();
+            oneBook.drawMe(avatar);
 
             if (collision(avatar, oneBook)) {
                 totalScore -= 25;
@@ -220,7 +280,7 @@ function drawScene () {
         });
     
         allBeers.forEach(function(oneBeer) {
-            oneBeer.drawMe();
+            oneBeer.drawMe(avatar);
             if (collision(avatar, oneBeer)) {
                 totalScore += 1;
                 oneBeer.y = - oneBeer.height;        
@@ -271,6 +331,7 @@ function drawScene () {
         changeGif("winner","./images/winner.gif");
         brainStatusImage.style.width = "150px";
         if (playAgainStatus !== "displayed") {
+            // animation();
             endScene.style.display = "block";
             var playAgainStatus = "diplayed";
         }
@@ -278,18 +339,36 @@ function drawScene () {
 
     
     requestAnimationFrame (function () {
-    drawScene();
+    drawScene(avatar);
     });
 }
 
 
 startGame.onclick =function () {
+    startScene.style.display = "none";
+    avatarScene.style.display= "flex";
+    
+
+}
+
+avatarGirlButton.onclick =function () {
+    animation();
     createBookArray();
     createBeerArray();
-    drawScene();
-    startScene.style.display = "none";
+    avatar = avatarGirl;
+    drawScene(avatar);
+    avatarScene.style.display = "none";
     myCanvas.style.display = "block";
+}
 
+avatarBoyButton.onclick =function () {
+    animation();
+    createBookArray();
+    createBeerArray();
+    avatar = avatarBoy;
+    drawScene(avatar);
+    avatarScene.style.display = "none";
+    myCanvas.style.display = "block";
 }
 
 playAgainButton.onclick = function () {
