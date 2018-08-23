@@ -19,6 +19,12 @@ h1 {
     margin:0;
 }
 
+h2 {
+    color: #EEB422;
+    font-family: 'Permanent Marker';
+    font-size:24px;    
+}
+
 .container {
     display: flex;
     justify-content: space-around;
@@ -65,8 +71,6 @@ h1 {
 .avatar-scene > h2 {
     padding-top:8%;
     margin-bottom: 0;
-    color: #EEB422;
-    font-family: 'Permanent Marker';
     font-size: 35px;
 }
 
@@ -151,7 +155,7 @@ canvas {
     padding: 4%;
     border-radius: 8px;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     font-style: bold;
 }
 
@@ -163,7 +167,7 @@ canvas {
     height: 20%;
 }
 
-.instructions > p  {
+.instructions > p, .instructions > h2  {
     margin: 0;
 }
 
@@ -174,7 +178,6 @@ canvas {
 }
 
 .brain-status > h2 {
-    font-size:24px;
     margin-top:0;
     font-family: 'Permanent Marker';
     color: #EEB422;
