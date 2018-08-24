@@ -276,9 +276,8 @@ function drawScene (avatar) {
     if (totalScore % 8 === 0 && totalScore > 0) {
 
         instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Your brain is full!</p> <p>Avoid books or your brain will explode and grab a beer to unlock your brain!</p> ";
-        instructionsTitle.style.color ="#FF7F50";
-        brainStatusTitle.style.color="#FF7F50";
-        console.log(instructionsTitle.style.color);
+        // instructionsTitle.style.color ="#FF7F50";
+        // brainStatusTitle.style.color="#FF7F50";
         changeGif("full","./images/full-brain.gif");
 
 

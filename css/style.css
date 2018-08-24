@@ -5,9 +5,6 @@ body {
     color: #303030;
 }
 
-header {
-    margin: 2% 0;
-}
 
 h1 {
     font-family: "Permanent Marker";
@@ -25,6 +22,10 @@ h2 {
     font-size:24px;    
 }
 
+header {
+    margin: 2% 0;
+}
+
 .container {
     display: flex;
     justify-content: space-around;
@@ -35,7 +36,6 @@ h2 {
     border-radius: 8px;
     width: 800px;
     height: 500px;
-    /* display:none; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -159,15 +159,12 @@ canvas {
     font-style: bold;
 }
 
-.trophy {
-    margin-bottom: 0;
-}
 
 .instructions, .result {
     height: 20%;
 }
 
-.instructions > p, .instructions > h2  {
+.instructions > p, .instructions-title  {
     margin: 0;
 }
 
@@ -177,12 +174,15 @@ canvas {
 
 }
 
-.brain-status > h2 {
+.brain-title {
     margin-top:0;
-    /* font-family: 'Permanent Marker'; */
-    /* color: #EEB422; */
+
 }
 
 .brain-img {
     width: 200px;
+}
+
+.trophy {
+    margin-bottom: 0;
 }
