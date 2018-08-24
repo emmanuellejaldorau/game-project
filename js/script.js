@@ -338,14 +338,14 @@ function drawScene (avatar) {
     }
 
     if (totalScore > 25) {
+        changeGif("winner","./images/winner.gif");
+        brainStatusImage.style.width = "150px";
         result = document.querySelector(".result");
         result.innerHTML= "<p class ='trophy'>🏆🏆🏆🏆🏆</p><p>Congrats! You are now a junior web developer!</p>";
         congrats.drawMe();
         brainStatusTitle.style.color="#3CB371";
         avatar.isActive = false;
         instructions.innerHTML = "You've won!";
-        changeGif("winner","./images/winner.gif");
-        brainStatusImage.style.width = "150px";
         if (playAgainStatus !== "displayed") {
             winAudio.play();
             animation();
