@@ -179,8 +179,8 @@ canvas {
 
 .brain-status > h2 {
     margin-top:0;
-    font-family: 'Permanent Marker';
-    color: #EEB422;
+    /* font-family: 'Permanent Marker'; */
+    /* color: #EEB422; */
 }
 
 .brain-img {
