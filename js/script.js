@@ -44,7 +44,7 @@ var startScene = document.querySelector(".start-scene");
 var avatarScene = document.querySelector(".avatar-scene")
 var avatarGirlButton = document.querySelector(".avatar-girl");
 var avatarBoyButton = document.querySelector(".avatar-boy");
-var endScene = document.querySelector(".end-scene");
+// var endScene = document.querySelector(".end-scene");
 var playAgainStatus = "notDisplayed";
 var playAgainButton = document.querySelector(".play-again");
 var avatar;
@@ -307,7 +307,8 @@ function drawScene (avatar) {
         instructions.innerHTML = "Sorry, you've lost!"; 
         brainStatusTitle.style.color="#8A2BE2";
         if (playAgainStatus !== "displayed") {
-            endScene.style.display = "block";
+            // endScene.style.display = "block";
+            playAgainButton.style.display = "block";
             playAgainStatus = "displayed";
         }
     }
@@ -349,7 +350,8 @@ function drawScene (avatar) {
         if (playAgainStatus !== "displayed") {
             winAudio.play();
             animation();
-            endScene.style.display = "block";
+            // endScene.style.display = "block";
+            playAgainButton.style.display = "block";
             playAgainStatus = "displayed";
         }
     }

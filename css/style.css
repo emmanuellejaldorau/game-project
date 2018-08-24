@@ -3,6 +3,10 @@ body {
     background-image: url(../images/background.jpg);
     background-size: cover;
     color: #303030;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -23,10 +27,11 @@ h2 {
 }
 
 header {
-    margin: 2% 0;
+    margin: 1% 0 2%;
 }
 
 .container {
+    width: 100%;
     display: flex;
     justify-content: space-around;
 }
@@ -95,11 +100,33 @@ header {
 
 }
 
-.end-scene {
+
+canvas {
+    background-color: #f4f3f4;
+    border-radius: 8px;
+    display:none;
+    position: relative;
+}
+
+/* .end-scene {
     display: none;
     position: absolute;
     top: 380px;
     left: 380px;
+} */
+
+/* .end-scene {
+    position: absolute;
+    top: 250px;
+    height: 250px;
+    width: 800px;
+    background-color: grey;
+    display: flex;
+    justify-content: center;
+} */
+
+.game-scene {
+    position: relative;
 }
 
 .play-again {
@@ -111,6 +138,10 @@ header {
     font-size: 20px;
     font-weight: bold;
     animation: 0.8s crazycolor infinite alternate;
+    position: absolute;
+    top: 255px;
+    left: 330px;
+    display:none;
 }
 
 
@@ -128,14 +159,6 @@ header {
         color: #8A2BE2;
     }
 
-}
-
-
-
-canvas {
-    background-color: #f4f3f4;
-    border-radius: 8px;
-    display:none;
 }
 
 .game-info {
