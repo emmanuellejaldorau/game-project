@@ -266,7 +266,6 @@ function drawScene (avatar) {
             oneBeer.drawMe(avatar);
             if (collision(avatar, oneBeer)) {
                 totalScore -= 25;
-                // oneBeer.y = - oneBeer.height;
                 changeGif("beer","./images/beer-brain.gif");
                 gameOverAudio.play();    
             }     
@@ -286,7 +285,6 @@ function drawScene (avatar) {
 
             if (collision(avatar, oneBook)) {
                 totalScore -= 25;
-                // oneBook.y = - oneBook.height;
                 changeGif("explosion","./images/brain-explosion.gif");
                 gameOverAudio.play(); 
             }            
@@ -308,7 +306,6 @@ function drawScene (avatar) {
         brainStatusTitle.style.color="#8A2BE2";
         if (playAgainStatus !== "displayed") {
             endScene.style.display = "block";
-            // playAgainButton.style.display = "block";
             playAgainStatus = "displayed";
         }
     }
@@ -351,7 +348,6 @@ function drawScene (avatar) {
             winAudio.play();
             animation();
             endScene.style.display = "block";
-            // playAgainButton.style.display = "block";
             playAgainStatus = "displayed";
         }
     }

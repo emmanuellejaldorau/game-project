@@ -105,7 +105,6 @@ canvas {
     background-color: #f4f3f4;
     border-radius: 8px;
     display:none;
-    position: relative;
 }
 
 .end-scene {
@@ -115,19 +114,6 @@ canvas {
     width: 800px;
 }
 
-/* .end-scene {
-    position: absolute;
-    top: 250px;
-    height: 250px;
-    width: 800px;
-    background-color: grey;
-    display: flex;
-    justify-content: center;
-} */
-
-/* .game-scene {
-    position: relative;
-} */
 
 .play-again {
     border: 3px solid #C71585;
@@ -141,10 +127,6 @@ canvas {
     display: block;
     width: 160px;
     margin: auto;
-    /* position: absolute;
-    top: 255px;
-    left: 330px;
-    display:none; */
 }
 
 
