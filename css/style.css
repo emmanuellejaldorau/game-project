@@ -108,12 +108,12 @@ canvas {
     position: relative;
 }
 
-/* .end-scene {
+.end-scene {
     display: none;
     position: absolute;
     top: 380px;
-    left: 380px;
-} */
+    width: 800px;
+}
 
 /* .end-scene {
     position: absolute;
@@ -125,9 +125,9 @@ canvas {
     justify-content: center;
 } */
 
-.game-scene {
+/* .game-scene {
     position: relative;
-}
+} */
 
 .play-again {
     border: 3px solid #C71585;
@@ -138,10 +138,13 @@ canvas {
     font-size: 20px;
     font-weight: bold;
     animation: 0.8s crazycolor infinite alternate;
-    position: absolute;
+    display: block;
+    width: 160px;
+    margin: auto;
+    /* position: absolute;
     top: 255px;
     left: 330px;
-    display:none;
+    display:none; */
 }
 
 
