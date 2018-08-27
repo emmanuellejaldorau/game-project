@@ -388,12 +388,14 @@ playAgainButton.onclick = function () {
     window.location.href="index.html";
 }
 
-leftArrow.onclick = function () {
-    avatar.x -=10;
+leftArrow.onclick = function (event) {
+    avatar.x -=50;
+    event.preventDefault();
 }
 
-rightArrow.onclick = function () {
-    avatar.x +=10;
+rightArrow.onclick = function (event) {
+    avatar.x +=50;
+    event.preventDefault();
 }
 
 document.onkeydown = function (event) {
