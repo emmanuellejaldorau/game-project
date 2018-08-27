@@ -52,16 +52,17 @@ var winPointAudio = new Audio("./sounds/winpoint.wav");
 var gameOverAudio = new Audio("./sounds/gameover.wav");
 var winAudio = new Audio("./sounds/win.wav");
 var startAudio = new Audio("./sounds/start.ogg");
-
+var leftArrow = document.querySelector(".left-arrow");
+var rightArrow = document.querySelector (".right-arrow");
 
 //Avatar object and its image
 var avatarGirlImg = new Image();
 avatarGirlImg.src = "./images/avatar-girl.png"
 var avatarGirl = {
     x: 375,
-    y: 440,
-    width: 60,
-    height: 60,
+    y: 430,
+    width: 70,
+    height: 70,
     isActive: true,
     drawMe: function () {
         ctx.drawImage(avatarGirlImg, this.x, this.y, this.width, this.height);
@@ -75,8 +76,8 @@ var avatarGirl = {
             this.y = 0;
         }
 
-        if (this.x > 800 - this.width) {
-            this.x = 800 - this.width;
+        if (this.x > 900 - this.width) {
+            this.x = 900 - this.width;
         }
 
         if (this.y > 500 - this.height) {
@@ -89,9 +90,9 @@ var avatarBoyImg = new Image();
 avatarBoyImg.src = "./images/avatar-boy.png"
 var avatarBoy = {
     x: 375,
-    y: 440,
-    width: 60,
-    height: 60,
+    y: 430,
+    width: 70,
+    height: 70,
     isActive: true,
     drawMe: function () {
         ctx.drawImage(avatarBoyImg, this.x, this.y, this.width, this.height);
@@ -105,8 +106,8 @@ var avatarBoy = {
             this.y = 0;
         }
 
-        if (this.x > 800 - this.width) {
-            this.x = 800 - this.width;
+        if (this.x > 900 - this.width) {
+            this.x = 900 - this.width;
         }
 
         if (this.y > 500 - this.height) {
@@ -122,8 +123,8 @@ bookImg.src = "./images/books.png"
 function Book (myX, myY) {
     this.x = Math.floor(Math.random() * 700);
     this.y = -50;
-    this.width = 50;
-    this.height = 50;
+    this.width = 60;
+    this.height = 60;
 }
 
 Book.prototype.drawMe = function (avatar) {
@@ -154,8 +155,8 @@ beerImg.src = "./images/beers.png"
 function Beer (myX, myY) {
     this.x = Math.floor(Math.random() * 700);
     this.y = -75;
-    this.width = 100;
-    this.height = 100;
+    this.width = 110;
+    this.height = 110;
 }
 
 Beer.prototype.drawMe = function (avatar) {
@@ -180,7 +181,7 @@ var createBeerArray = function(){
 
 //Game over
 var gameOver = {
-    x:200,
+    x:250,
     y:220,
     opacity:0,
     drawMe: function () {
@@ -201,7 +202,7 @@ var gameOver = {
 //Congrats
 
 var congrats = {
-    x: 200,
+    x: 250,
     y: 220,
     opacity:0,
     drawMe: function () {
@@ -237,6 +238,29 @@ function changeGif(status, statusImg) {
     }
 };
 
+function pointLoop (allItems) {
+    allItems.forEach(function(oneItem){
+        oneItem.drawMe(avatar);
+
+        if (collision(avatar, oneItem)) {
+            totalScore += 1;
+            oneItem.y = - oneItem.height;
+            winPointAudio.play();
+        }
+    });
+};
+
+function obstacleLoop (allItems, status, statusImg) {
+    allItems.forEach(function(oneItem) {
+        oneItem.drawMe(avatar);
+        if (collision(avatar, oneItem)) {
+            totalScore -= 25;
+            changeGif(status,statusImg);
+            gameOverAudio.play();    
+        }     
+    });
+};
+
 
 
 function drawScene (avatar) {
@@ -247,63 +271,31 @@ function drawScene (avatar) {
 
     if ((totalScore % 8 !== 0 && totalScore > 0 && totalScore < 26) || totalScore === 0) {
 
-        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Catch the books to get more skilled!</p> <p>Avoid the beers, you'll party later!</p>"
+        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Catch the books to get more skilled!</p> <p>Avoid the beers!</p>"
         brainStatusTitle.style.color="#EEB422";
         changeGif("happy","./images/happy-brain.gif");
 
-        allBooks.forEach(function(oneBook) {
-            oneBook.drawMe(avatar);
+        pointLoop(allBooks);
+        obstacleLoop(allBeers, "beer","./images/beer-brain.gif");
 
-            if (collision(avatar, oneBook)) {
-                totalScore += 1;
-                oneBook.y = - oneBook.height;
-                winPointAudio.play();
-            }
-        
-        });
-    
-        allBeers.forEach(function(oneBeer) {
-            oneBeer.drawMe(avatar);
-            if (collision(avatar, oneBeer)) {
-                totalScore -= 25;
-                changeGif("beer","./images/beer-brain.gif");
-                gameOverAudio.play();    
-            }     
-        });
     }
 
     if (totalScore % 8 === 0 && totalScore > 0) {
 
-        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Your brain is full!</p> <p>Avoid books or your brain will explode and grab a beer to unlock your brain!</p> ";
-        // instructionsTitle.style.color ="#FF7F50";
-        // brainStatusTitle.style.color="#FF7F50";
+        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Your brain is full!</p> <p>Avoid books and grab a beer instead!</p> ";
         changeGif("full","./images/full-brain.gif");
 
+        obstacleLoop(allBooks, "explosion","./images/brain-explosion.gif");    
+        pointLoop(allBeers);
 
-        allBooks.forEach(function(oneBook) {
-            oneBook.drawMe(avatar);
-
-            if (collision(avatar, oneBook)) {
-                totalScore -= 25;
-                changeGif("explosion","./images/brain-explosion.gif");
-                gameOverAudio.play(); 
-            }            
-        });
-    
-        allBeers.forEach(function(oneBeer) {
-            oneBeer.drawMe(avatar);
-            if (collision(avatar, oneBeer)) {
-                totalScore += 1;
-                oneBeer.y = - oneBeer.height;
-                winPointAudio.play();        
-            }     
-        });
     }
 
     if (totalScore < 0 ){
         gameOver.drawMe();
         instructions.innerHTML = "Sorry, you've lost!"; 
         brainStatusTitle.style.color="#8A2BE2";
+        leftArrow.style.borderColor= "#8A2BE2";
+        rightArrow.style.borderColor= "#8A2BE2";
         if (playAgainStatus !== "displayed") {
             endScene.style.display = "block";
             playAgainStatus = "displayed";
@@ -342,6 +334,8 @@ function drawScene (avatar) {
         result.innerHTML= "<p class ='trophy'>🏆🏆🏆🏆🏆</p><p>Congrats! You are now a junior web developer!</p>";
         congrats.drawMe();
         brainStatusTitle.style.color="#3CB371";
+        leftArrow.style.borderColor= "#3CB371";
+        rightArrow.style.borderColor= "#3CB371";
         avatar.isActive = false;
         instructions.innerHTML = "You've won!";
         if (playAgainStatus !== "displayed") {
@@ -394,6 +388,13 @@ playAgainButton.onclick = function () {
     window.location.href="index.html";
 }
 
+leftArrow.onclick = function () {
+    avatar.x -=10;
+}
+
+rightArrow.onclick = function () {
+    avatar.x +=10;
+}
 
 document.onkeydown = function (event) {
     switch (event.keyCode) {
