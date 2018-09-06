@@ -26,7 +26,7 @@ h1 {
 h2 {
     color: #EEB422;
     font-family: 'Permanent Marker';
-    font-size:28px;    
+    font-size:35px;    
 }
 
 header {
@@ -119,7 +119,7 @@ canvas {
 .end-scene {
     display: none;
     position: absolute;
-    top: 600px;
+    top: 550px;
     width: 900px;
 }
 
@@ -160,6 +160,7 @@ canvas {
     justify-content: center;
     align-items: center;
     width: 100%;
+    touch-action: manipulation;
 }
 
 .arrows > img {
@@ -187,19 +188,20 @@ canvas {
     padding: 4%;
     border-radius: 8px;
     text-align: center;
-    font-size: 25px;
+    font-size: 30px;
     font-style: bold;
-    height: 50%;
-    margin: 0 3% 0 0;
+    height: 70%;
+    margin: 0 2% 0 0;
 }
 
 .instructions, .result {
-    width: 20%;
+    width: 23%;
 }
 
 .instructions {
-    margin-left: 3%;
+    margin-left: 2%;
 }
+
 
 .instructions > p  {
     margin: 0;
@@ -210,10 +212,10 @@ canvas {
     width: 25%;
 }
 
-.brain-title, .instructions-title {
+.brain-title, .instructions-title{
     margin-top:0;
-
 }
+
 
 .brain-img {
     height: 125px;

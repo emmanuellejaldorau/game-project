@@ -271,7 +271,7 @@ function drawScene (avatar) {
 
     if ((totalScore % 8 !== 0 && totalScore > 0 && totalScore < 26) || totalScore === 0) {
 
-        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Catch the books to get more skilled!</p> <p>Avoid the beers!</p>"
+        instructions.innerHTML = "<h2 class='instructions-title'>Rules</h2><p>Catch the books to get more skilled!</p> <p>Avoid the beers!</p>"
         brainStatusTitle.style.color="#EEB422";
         changeGif("happy","./images/happy-brain.gif");
 
@@ -282,7 +282,7 @@ function drawScene (avatar) {
 
     if (totalScore % 8 === 0 && totalScore > 0) {
 
-        instructions.innerHTML = "<h2 class='instructions-title'>Playing rules</h2><p>Your brain is full!</p> <p>Avoid books and grab a beer instead!</p> ";
+        instructions.innerHTML = "<h2 class='instructions-title'>Rules</h2><p>Your brain is full!</p> <p>Avoid books and grab a beer instead!</p> ";
         changeGif("full","./images/full-brain.gif");
 
         obstacleLoop(allBooks, "explosion","./images/brain-explosion.gif");    
