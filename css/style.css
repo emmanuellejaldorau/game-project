@@ -119,7 +119,7 @@ canvas {
 .end-scene {
     display: none;
     position: absolute;
-    top: 550px;
+    top: 930px;
     width: 900px;
 }
 
@@ -248,7 +248,7 @@ canvas {
     .container {
         height: 100%;
         width: 100%;
-        flex-direction: row;
+        flex-direction: row-reverse;
         justify-content: space-around;
     }
     
